@@ -1,0 +1,11 @@
+from fastapi import FastAPI
+import pandas as pd
+
+app = FastAPI()
+
+df = pd.read_csv("trades.csv")
+
+@app.get("/")
+def home():
+    total_pl = df["Realized P/L (incl. comm.)"].sum()
+    return {"Total P/L": round(total_pl, 2)}
